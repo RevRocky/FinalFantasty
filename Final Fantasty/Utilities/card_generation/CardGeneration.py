@@ -3,31 +3,29 @@ Final Fantasty as well as creating png-representations of the cards
 
 Author: Rocky Petkov"""
 
-import sys
 import os
 from card_generation import excelToJson, excelToPNG
+
+EXCEL_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "Ingredients.xlsx"
+JSON_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "CardDB.json"
 
 
 
 def main():
-    # Ensure argv is of proper length and that the input file exists
-    if (len(sys.argv) != 3):
-        print("Correct usage of this script is XLSX to JSON INFILE OUTFILE\nPlease use the correct number of arguments",
-              file=sys.stderr)
-        exit(1)
-    elif not os.path.isfile(sys.argv[1]):
+    # Ensureing that the excel spreadsheet we are trying to read exists
+    if not os.path.isfile(EXCEL_DATABASE):
         print("You are trying to call this script on a file which does not exist", file=sys.stderr)
         exit(2)
 
     print("Updating Database")
-    inFile, outFile = sys.argv[1], sys.argv[2]
+    inFile, outFile = EXCEL_DATABASE, JSON_DATABASE
     cardList = excelToJson.readExcelFile(inFile)        # Reading in the list of cards
     excelToJson.writeJsonFile(cardList, outFile)        # Writing it to JSON
     print("Databases are now upto date!")
     print("Updating Pictures")
-    excelToPNG.createPictures(cardList)                 # Updating all of the pictures
+    excelToPNG.create_pictures(cardList)                 # Updating all of the pictures
     print("Picture Database now updated")
     print("Exiting!")
     exit(0)
 
-main
+main()

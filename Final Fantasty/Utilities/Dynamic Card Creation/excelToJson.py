@@ -30,10 +30,9 @@ def readExcelFile(inFile):
 		card["Description"] = rowValues[2]
 		card["Stats"] = (rowValues[3], rowValues[4], rowValues[5], rowValues[6], rowValues[7], rowValues[8])	 # Sweet, Sour, Bitter, Spicy, Salty, Umami (Not final)
 		card["Mechanics"] = (rowValues[9], rowValues[10])	# Stored as a two-tuple
-		card ["Recipe"] = rowValues[11]
-		card["Tags"] = rowValues[12]
-		card["Art"] = rowValues[13]
-		card["Picture Location"] = rowValues[14]
+		card["Tags"] = rowValues[11]
+		card["Art"] = rowValues[12]
+		card["Picture Location"] = rowValues[13]
 		cardList.append(card)
 
 	return cardList
