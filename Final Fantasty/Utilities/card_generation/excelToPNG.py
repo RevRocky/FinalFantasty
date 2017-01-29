@@ -18,9 +18,11 @@ import copy
 CARD_ART_DIRECTORY = ".." + os.sep + ".." + os.sep + "Art"                 # Path to Card Art!
 CARD_DIRECTORY = ".." + os.sep + ".." + os.sep + "Art" + os.sep + "Cards"  # Path to Final Card Images
 
-CARD_FONT = ImageFont.truetype("Bitter-Regular.otf", size=28)
+MECHANICS_WRITEUPS = ".." + os.sep + ".." + os.sep + "Docs" + os.sep + "Docs" + "mechanics.txt"
+
+CARD_FONT = ImageFont.truetype("Bitter-Regular.otf", size=18)
 CARD_FONT_BOLD = ImageFont.truetype("Bitter-Bold.otf", size=50)
-CARD_FONT_ITALIC = ImageFont.truetype("Bitter-Italic.otf", size=28)
+CARD_FONT_ITALIC = ImageFont.truetype("Bitter-Italic.otf", size=16)
 
 BLACK = (0, 0, 0)
 
@@ -30,7 +32,8 @@ PICTURE_SIZE = (576, 577)                                                  # Siz
 NAME_LOCATION = (368, 701)                                                 # Boundaries of card name
 NAME_BOUNDARIES = (515, 70)                                                # Size of card area alotted to name
 TYPE_BOUNDARIES = ((0, 0), (0, 0), (0, 0), (0, 0))                         # Boundaries of card type descriptors
-DESCRIPTION_BOUNDARIES = ((0, 0), (0, 0), (0, 0), (0, 0))                  # Boundaries of Mechanic Description
+MECHANICS_TOP_LEFT = (87, 812)                                             # Boundaries of Mechanic Description
+FLAVOUR_TEXT_LOCATION = (332, 930)                                         # Centre of flavour text area
 PICTOGRAMME_BOUNDARIES = ((0, 0), (0, 0), (0, 0), (0, 0))                  # Boundaries of where the stats are
 
 "Simple little function. Loops around and makes images for all of the cards!"
@@ -47,15 +50,22 @@ def construct_card_image(card_description):
                           card_description["Art"], 'r')
     card_image = overlay_image(card_template, card_art, PICTURE_TOP_LEFT)    # Overlay the card art on to template
 
-    # Now we overlay the title on the image
+    # Now we overlay the title, mechanics and flavour text on the image
     image_draw = ImageDraw.Draw(card_image)
     resized_font, width, null = fit_text(NAME_BOUNDARIES, CARD_FONT_BOLD, card_description["Name"], image_draw)
     centered_top_left = (NAME_LOCATION[0] - (width/2), NAME_LOCATION[1])
-
     image_draw.multiline_text(xy=centered_top_left, text=card_description["Name"].upper(), font=resized_font,
                                 fill=BLACK, align="left")
-    card_image.show()
+    # Empty strings will be filled in with brief descriptions read from a text file
+    mechanics_message = card_description["Mechanics"][0] + " \n" + card_description["Mechanics"][1] + " "
+    image_draw.multiline_text(xy=MECHANICS_TOP_LEFT, text=mechanics_message, font=CARD_FONT, fill=BLACK, spacing=5)
 
+    # Centering and Drawing Flavour Test
+    flavour_text = '"{0}"'.format(card_description["Description"])
+    width, height = image_draw.textsize(flavour_text, CARD_FONT_ITALIC)           # Calculating size of the message
+    centered_top_left = (FLAVOUR_TEXT_LOCATION[0] - (width/2), FLAVOUR_TEXT_LOCATION[1])
+    image_draw.multiline_text(xy=centered_top_left, text=flavour_text, font=CARD_FONT_ITALIC, fill=BLACK)
+    card_image.show()
 
 
 
