@@ -48,7 +48,7 @@ public class AlDente : Mechanic {
 	// Accurate only for a test implementation
 	private int[] boostStats() {
 		int[] newStats = getParent().getStats();				// Getting the parent's stats
-		int maxStatIndex = maxIndex(oldStats);			// Index of the highest stat!
+		int maxStatIndex = maxIndex(newStats);			// Index of the highest stat!
 		int i;											// A loop counter
 		for (i = 0; i < NUM_STATS; i++) {
 			if (i == maxStatIndex) {
