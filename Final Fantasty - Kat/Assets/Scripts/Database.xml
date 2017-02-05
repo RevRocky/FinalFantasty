@@ -1,0 +1,43 @@
+﻿<Inventory>
+	<Item>
+		<itemName>Spagetti</itemName>
+		<itemDescription> normal spagetti</itemDescription>
+		<itemSweet>0</itemSweet>
+		<itemSour>0</itemSour>
+		<itemSalty>1</itemSalty>
+		<itemSpicy>0</itemSpicy>
+		<itemType>Ingredients</itemType>
+		<multiItems>true</multiItems>
+	</Item>
+	<Item>
+		<itemName>Mom Spagetti</itemName>
+		<itemDescription> your mom spagetti</itemDescription>
+		<itemSweet>1</itemSweet>
+		<itemSour>0</itemSour>
+		<itemSalty>1</itemSalty>
+		<itemSpicy>0</itemSpicy>
+		<itemType>Ingredients</itemType>
+		<multiItems>true</multiItems>
+	</Item>
+	<Item>
+		<itemName>Tomato</itemName>
+		<itemDescription>vegetable</itemDescription>
+		<itemSweet>1</itemSweet>
+		<itemSour>1</itemSour>
+		<itemSalty>1</itemSalty>
+		<itemSpicy>0</itemSpicy>
+		<itemType>Ingredients</itemType>
+		<multiItems>true</multiItems>
+	</Item>
+	<Item>
+		<itemName>Chili</itemName>
+		<itemDescription>spices</itemDescription>
+		<itemSweet>1</itemSweet>
+		<itemSour>0</itemSour>
+		<itemSalty>0</itemSalty>
+		<itemSpicy>3</itemSpicy>
+		<itemType>Ingredients</itemType>
+		<multiItems>true</multiItems>
+	</Item>
+</Inventory>
+
