@@ -29,7 +29,7 @@ public class Item : MonoBehaviour {
 		
 	}
 
-	public Item(ItemType){
+	public Item(ItemType type){
 		itemType = type;
 	}
 
@@ -48,7 +48,7 @@ public class Item : MonoBehaviour {
 		
 	}
 
-	public Item(string name, string desc, int sweet, int sour, int salty, int spicy, itemType iType, bool mItems, int counter){
+	public Item(string name, string desc, int sweet, int sour, int salty, int spicy, ItemType iType, bool mItems, int counter){
 		itemName = name;
 		itemID = autoIndex++;
 		itemDescription = desc;
@@ -62,7 +62,7 @@ public class Item : MonoBehaviour {
 		itemCounter = counter;
 	}
 
-	public Item(string name, string desc, int sweet, int sour, int salty, int spicy, itemType iType, bool mItems, int counter){
+	public Item(string name, string desc, int sweet, int sour, int salty, int spicy, ItemType iType, bool mItems, int counter){
 		itemName = name;
 		itemID = autoIndex++;
 		itemDescription = desc;
