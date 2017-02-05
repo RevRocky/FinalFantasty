@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : {
+public class Deck  {
 
 	private List<Card> cardList;
 
@@ -21,7 +21,7 @@ public class Deck : {
 			random = Random.Range(i, cardList.Count);
 			temp = cardList[i];
 			cardList[i] = cardList[random];
-			cardList[random] = cardList[i]
+			cardList [random] = cardList [i];
 		}
 	}
 
