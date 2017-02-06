@@ -6,11 +6,9 @@ Version 0.1
 
 Author: Rocky Petkov"""
 
-
 from PIL import ImageDraw, Image, ImageFont
 import os
 import copy
-
 
 # Below are some global constants regarding different colours, fonts and file locations to be used with this module.
 # Please do not tamper with these constants with out the express approval of the author.
@@ -27,7 +25,6 @@ CARD_FONT_BOLD = ImageFont.truetype("Bitter-Bold.otf", size=50)
 CARD_FONT_ITALIC = ImageFont.truetype("Bitter-Italic.otf", size=16)
 
 BLACK = (0, 0, 0)
-
 
 PICTURE_TOP_LEFT = (80, 77)                                                # Top left corner of the picture area
 PICTURE_SIZE = (576, 577)                                                  # Size of picture area
