@@ -14,7 +14,8 @@ using UnityEngine;
 public class AlDente : Mechanic {
 
 	public const int NUM_STATS = 6;
-	public  const string DESCRIPTION = "Combine this card into a meal before time is up for Great Rewards";
+	public const string DESCRIPTION = "Combine this card into a meal before time is up for Great Rewards";
+	public const bool INHERITABLE = false;
 
 
 	/*
@@ -22,7 +23,7 @@ public class AlDente : Mechanic {
 	 * ParentCard, description are both passed to
 	 * the constructor of the parent class
 	 */
-	public AlDente(Card parentCard) : base(parentCard, DESCRIPTION) {
+	public AlDente(Card parentCard) : base(parentCard, DESCRIPTION, INHERITABLE) {
 		;
 	}
 

@@ -16,13 +16,17 @@ public abstract class Mechanic : MonoBehaviour {
 
 
 	private bool activated;			// Tracks whether the mechanic has been activated yet.
-	private string toolTip;	// A tooltip associated with the mechanic. May be useful for a hover over dialogue
-	private Card parent;				// Allows a mechanic to access information pertaining to the card it belongs to!
+	private string toolTip;			// A tooltip associated with the mechanic. May be useful for a hover over dialogue
+	private Card parent;			// Allows a mechanic to access information pertaining to the card it belongs to!
+	public bool inheritable;		// Tracks if the mechanic is able to be passed down to meals with this card
 
-	public Mechanic(Card parentCard, string description) {
+
+	public Mechanic(Card parentCard, string description, bool inheritable) {
 		parent = parentCard;
 		toolTip = description;
 		activated = false;
+		this.inheritable = inheritable;
+
 	}
 
 	// This method will contain any effects that happen when a card is drawn into a player's hand

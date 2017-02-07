@@ -5,6 +5,7 @@ using UnityEngine;
 public class Deck  {
 
 	private List<Card> cardList;
+	public int length
 
 	// Constructs an empty deck
 	public Deck() {
@@ -29,16 +30,21 @@ public class Deck  {
 	public Card drawCard() {
 		Card drawnCard = cardList[0];
 		cardList.RemoveAt(0);
+		length--;
 		return drawnCard;
 	}
 
 	// Adds a card to the bottom of the deck
 	public void addCard(Card newCard) {
 		cardList.Add(newCard);
+		length++;			// Increment our length
 	}
 
 	// Adds a card to the index specified of the deck
 	public void addCard(Card newCard, int index) {
 		cardList.Insert(index, newCard);
+		length++;
 	}
+
+
 }
