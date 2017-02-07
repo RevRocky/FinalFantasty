@@ -38,7 +38,7 @@ public static class IngredientStack : MonoBehaviour {
 		int j;
 		string searchTag;
 		Card mealCard;
-		BitMap cardArt;													// Obtained either through DB retrieval or combination of images
+		Bitmap cardArt;													// Obtained either through DB retrieval or combination of images
 
 		// Loop over cumulating mechanics, stats and tags for each of our cards
 		foreach (Card card in theCards) {
