@@ -10,9 +10,9 @@ public struct DatabaseEntry {
 	string description;
 	string type;
 	string artLocation;
-	List<string> Mechanics;
+	List<string> mechanics;
 	bool multiItems;
-	int[6] stats;
+	fixed int stats[6];
 
 	public DatabaseEntry() {
 		;						// TODO Look over database and figure out least messy approach
