@@ -1,4 +1,3 @@
-import simplejson as json
 from collections import OrderedDict
 import xlrd
 import sys
@@ -30,19 +29,34 @@ def readExcelFile(inFile):
 		card["Description"] = rowValues[2]
 		card["Stats"] = (rowValues[3], rowValues[4], rowValues[5], rowValues[6], rowValues[7], rowValues[8])	 # Sweet, Sour, Bitter, Spicy, Salty, Umami (Not final)
 		card["Mechanics"] = (rowValues[9], rowValues[10])	# Stored as a two-tuple
-		card ["Recipe"] = rowValues[11]
-		card["Tags"] = rowValues[12]
+		card["Tag"] = rowValues[12]							# Tag must be a unique value
 		card["Art"] = rowValues[13]
 		card["Picture Location"] = rowValues[14]
 		cardList.append(card)
 
 	return cardList
 
-# Writes the dictionaries stored in "listofDicts" to the specified
-# output file as a properly formatted json file
-def writeJsonFile(listofDicts,outFile):
-	jsonData = json.dumps(listofDicts)
+def write_XML(card_list, out_file):
+	with open(out_file, 'w') as f:
+		f.write(build_xml_string)		# Write our built string
 
-	#write to file
-	with open(outFile, 'w') as out:
-		out.write(jsonData)
+# We're taking the naive approach and manually building an XML file (At this time, I do not believe any good libraries exist for this
+def build_xml_string(card_list):
+	XML_string = ""		# Initialise the XML string to be an empty string
+	for card_info in card_list:
+		XML_string += construct_XML_entry(card_info)
+	return XML_string
+
+# Builds the entry for a given card. 
+# Currently there is no error checking as it should ALWAYS
+# correct input.
+def construct_XML_entry(card_info):
+	XML_entry = "<Card>\n"							# Opening the space for a new card to be defined
+	XML_tag_base = "\t<{0}>{1}</{0}>\n"				# Basic Structure of an XML tag
+	for key, data in card_info:
+		XML_entry += XML_tag_base.format(key, data)
+	XML_entry += "</Card>\n"							# End of card info
+	return XML_entry
+
+
+

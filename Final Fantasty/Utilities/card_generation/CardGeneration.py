@@ -20,7 +20,7 @@ def main():
     print("Updating Database")
     inFile, outFile = EXCEL_DATABASE, JSON_DATABASE
     cardList = excelToJson.readExcelFile(inFile)        # Reading in the list of cards
-    excelToJson.writeJsonFile(cardList, outFile)        # Writing it to JSON
+    excelToJson.writeXML(cardList, outFile)        # Writing it to JSON
     print("Databases are now upto date!")
     print("Updating Pictures")
     excelToPNG.create_pictures(cardList)                 # Updating all of the pictures

@@ -5,113 +5,32 @@ using System.Xml;
 using System.IO;
 
 public class Database : MonoBehaviour {
+
+	// TODO Tidy this up, what is this all doing?
 	public TextAsset InventoryAsset;
-	public static List<Item> items = new List<Item>();
-	public List<Item> inspectorItems = new List<Item>();
+	private List<Dictionary<string, string>> itemsDict = newList<Dictionary<string, DatabaseEntry>> ();
 
-	private List<Dictionary<string, string>> itemsDict = newList<Dictionary<string, string>> ();
-	private Dictionary<string, string> obj;
-
+	// TODO We need to ensure this persists across scenes, otherwise there will be a signifigant overhead on game start
 	void Start (){
-		ReadItems ();
-		for (int i = 0; i < items.Count; i++) {
-			items.Add (new Item (itemsDict));
-		}
-		inspectorItems = items;
+		ReadItems ();		// We shouldn't need to do anything more. The database is a behind the scenes thing
 	}
 
+	/*
+	 * Parses an XML file to create a hashtable mapping each unique card tag
+	 * to its information associated with the card (also stored in the XML file)
+	 */
 	void ReadItems() {
+		string itemTag;
+
 		XmlDocument xmlDoc = new XmlDocument ();
-		xmlDoc.LoadXml (InventoryAsset.text);
-		XmlNode itemList = xmlDoc.GetElementsByTagName ("Item"); //look for the item tag in the xml file
+		xmlDoc.LoadXml (InventoryAsset.text);					 				// Loading the XML document
+		XmlNode itemList = xmlDoc.GetElementsByTagName ("Card"); 				//look for the card tag in the xml file
 
-		foreach(XmlNode itemInfo in itemList) { //store all the tag in a list
+		foreach(XmlNode itemInfo in itemList) { 
 			XmlNodeList itemContent = itemInfo.ChildNodes;
-			obj = newDictionary<string, string>();
-
-			foreach(XmlNode content in itemContent){
-				switch(GUIContent.Name){
-				case "itemName":
-					obj.Add ("itemName", content.InnerText);
-					break;
-				case "itemDescription":
-					obj.Add ("itemDescription", content.InnerText);
-					break;
-				case "itemSweet":
-					obj.Add ("itemSweet", content.InnerText);
-					break;
-				case "itemSour":
-					obj.Add ("itemSour", content.InnerText);
-					break;
-				case "itemSalty":
-					obj.Add ("itemSalty", content.InnerText);
-					break;
-				case "itemSpicy":
-					obj.Add ("itemSpicy", content.InnerText);
-					break;
-				case "itemType":
-					obj.Add ("itemType", content.InnerText);
-					break;
-				case "multiItems":
-					obj.Add ("multiItems", content.InnerText);
-					break;
-				}
+			iemsDict.add(itemInfo.Item["Tag"], new DatabaseEntry(itemInfo));	// Associate the tag with a database entry read from the XML's node
 			}
 			itemsDict.Add (obj);	//add tag to dict
 		}
 	}
-
-	//check if item is stackable
-	public static bool isItemMultiple(int id) {
-		bool isMulti = false;
-		for (int i = 0; i < items.Count; i++) { //loop through all the items in the game
-			if (items [i].itemID == id) { 
-				if (items [i].multiItems) { //if the multiItems in the database xml is true
-					isMulti = true;
-				}
-			}
-		}
-		return isMulti;
-	}
-
-	//check if item is stackable
-	public static bool isItemMultiple(int name) {
-		bool isMulti = false;
-		for (int i = 0; i < items.Count; i++) { //loop through all the items in the game
-			if (items [i].itemName == name) { 
-				if (items [i].multiItems) { //if the multiItems in the database xml is true
-					isMulti = true;
-				}
-			}
-		}
-		return isMulti;
-		}
-		
-	//return the name of the item
-	public string getNameFromID(int id) { // if our items have ids
-		for(int i = 0; i < items.Count; i++){
-			if (Item [i].itemID == id) {
-				return item [i].itemName;
-			}
-		}
-		return "ERROR";
-		Debug.LogError ("ERROR: ITEM NOT FOUND");
-	}
-
-	public static void copyItem(Item newItem, Item originalItem){
-		Item tempItem = new Item ();
-		tempItem = originalItem;
-
-		newItem.itemName = tempItem.itemName;
-		newItem.itemID = tempItem.itemID;
-		newItem.itemDescription = tempItem.itemDescription;
-		newItem.itemSweet = tempItem.itemSweet;
-		newItem.itemSour = tempItem.itemSour;
-		newItem.itemSalty = tempItem.itemSalty;
-		newItem.itemSpicy = tempItem.itemSpicy;
-		newItem.itemCounter = tempItem.itemCounter;
-		newItem.multiItems = tempItem.multiItems;
-
-	}
-
 }
