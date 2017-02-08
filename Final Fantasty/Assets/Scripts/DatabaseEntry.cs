@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.XML;
 
-// A tiny struct for holding the database entry of a card!
+// A tiny class for holding the database entry of a card!
 // <3 Rocky
-public struct DatabaseEntry {
+// TODO Write get and set methods!
+public class DatabaseEntry {
 	string name;
 	string description;
 	string type;
 	string artLocation;						// For central card art
 	string spriteLocation;					// For a completed sprite. Null if a meal card!
 	string ingredientTag;					// Null if not an ingredient
-	string[] mechanics;						// TODO make sure we use .length instead of .count now.
+	List<string> mechanics;				
 	bool multiItems;
 	fixed byte stats[6];					// Take note of the fact I'm storing this in a byte!
 
@@ -45,7 +46,7 @@ public struct DatabaseEntry {
 					}
 				break;
 				case "Mechanics":
-					mechanics = data.InnerText.split(python_List_Delimiters, StringSplitOptions.RemoveEmptyEntries);
+					mechanics = data.InnerText.split(python_List_Delimiters, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 				break;
 				case "Art":
 					artLocation = content.InnerText;
@@ -58,5 +59,31 @@ public struct DatabaseEntry {
 				break;
 			}
 		}
+	}
+
+	// A constructor only used by the clone method to create a new Database Entry.
+	// TODO use our set methods
+	public DatabaseEntry(string name, string description, string type, string artLocation, string spriteLocation,
+		string ingredientTag, List<string> mechanics, bool multiItems, byte[] stats) {
+
+		// Check if the stats array is of the correct size
+		if (stats.Length() != 6) {
+			throw new Exception("Improper stat array given!");
+		}
+		this.name 			= name;
+		this.description;	= description;
+		this.type;			= type;
+		this.artLocation;	= artLocation;						// For central card art
+		this.spriteLocation = spriteLocation;					// For a completed sprite. Null if a meal card!
+		this.ingredientTag	= ingredientTag;					// Null if not an ingredient
+		this.mechanics	    = Mechanics;			
+		this.multiItems		= multiItems;
+		this.stats;			= stats;							// Take note of the fact I'm storing this in a byte!\
+	}
+
+	// Returns a deep copy of this database entry
+	public DatabaseEntry clone() {
+		return new DatabaseEntry(name, description, type, artLocation, 
+			spriteLocation, ingredientTag, mechanics, multiItems, stats);	// Return a brand new DB entry with same type of info
 	}
 }
