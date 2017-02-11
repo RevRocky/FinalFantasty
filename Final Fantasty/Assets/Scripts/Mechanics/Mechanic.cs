@@ -21,7 +21,7 @@ public abstract class Mechanic : MonoBehaviour {
 	public bool inheritable;		// Tracks if the mechanic is able to be passed down to meals with this card
 
 
-	public Mechanic(Card parentCard, string description, bool inheritable) {
+	public void init(Card parentCard, string description, bool inheritable) {
 		parent = parentCard;
 		toolTip = description;
 		activated = false;

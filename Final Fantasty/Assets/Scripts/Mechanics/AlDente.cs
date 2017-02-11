@@ -23,8 +23,8 @@ public class AlDente : Mechanic {
 	 * ParentCard, description are both passed to
 	 * the constructor of the parent class
 	 */
-	public AlDente(Card parentCard) : base(parentCard, DESCRIPTION, INHERITABLE) {
-		;
+	public void init(Card parentCard) {
+		base.init(parentCard, DESCRIPTION, INHERITABLE);		// Call the initialisation function of the parent class
 	}
 
 	// This method will contain any effects that happen when a card is drawn into a player's hand

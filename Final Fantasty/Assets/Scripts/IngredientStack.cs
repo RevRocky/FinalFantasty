@@ -59,16 +59,15 @@ public static class IngredientStack : MonoBehaviour {
 			searchTag += tag; 											// Combine those tags
 		}
 		try {
-			DatabaseEntry mealEntry = DB.seach(searchTag);				// Returns a clone of the database entry
+			DatabaseEntry mealEntry = DB.seachByTag(searchTag);			// Returns a clone of the database entry
 			cardArt = Image.FromFile(Path.Combine(MEAL_IMAGE_DIRECTORY, mealEntry.artLocation));
 			mealEntry.stats = combineStatsGood(mealEntry.stats, sumStats);
 			mealEntry.mechanics = combineMechanicsGood(mealEntry.mechanics, mechanicList);
 		}
 		catch (ItemNotFound e) {
-			cardArt = ImageProcessing.hybridCardArt(theCards);			// A static method which will create a hybrid card art quickly and efficiently!
+			cardArt = ImageProcessing.hybridCardArt(theCards);	// A static method which will create a hybrid card art quickly and efficiently!
 			int[] mealStats = combineStatsBad(sumStats);		// Combines the stats and adds heavy penalty to the stats
 			mechanicList = addBadMechanic(mechanicList);
-			// TODO: Create DataBaseEntry Struct
 		}
 		// TODO: Create new card from DB entry
 	}
@@ -88,12 +87,15 @@ public static class IngredientStack : MonoBehaviour {
 	}
 
 	// Combines any mechanics the ingredients have with the list of mechanics of the meal.
-	private List<Mechanic> combineMechanicsGood(List<Mechanic> baseMechanics, List<Mechanic> ingredientMechanics) {
+	// TODO implement instantiateMechanics
+	private List<Mechanic> combineMechanicsGood(List<string> baseMechanicStrings, List<Mechanic> ingredientMechanics) {
+		List<Mechanic> baseMechanics = Card.instantiateMechanics(baseMechanicStrings);								// Instantiate mechanics from their strings
 		List<Mechanic> newMechanics = new List<Mechanic>(baseMechanics.Count + ingredientMechanics.Count);			// Creating a static sized buffer
 		newMechanics.AddRange(baseMechanics);
 		newMechanics.AddRange(ingredientMechanics);
 		return newMechanics;
 	}
+
 
 	// Randomly adds a negative side-effect to
 	private List<Mechanic> addBadMechanic(List<Mechanic> ingredientMechanics) {
