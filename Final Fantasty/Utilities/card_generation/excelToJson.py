@@ -38,7 +38,7 @@ def readExcelFile(inFile):
 
 def write_XML(card_list, out_file):
 	with open(out_file, 'w') as f:
-		f.write(build_xml_string)		# Write our built string
+		f.write(build_xml_string(card_list))		# Write our built string
 
 # We're taking the naive approach and manually building an XML file (At this time, I do not believe any good libraries exist for this
 def build_xml_string(card_list):
@@ -53,10 +53,7 @@ def build_xml_string(card_list):
 def construct_XML_entry(card_info):
 	XML_entry = "<Card>\n"							# Opening the space for a new card to be defined
 	XML_tag_base = "\t<{0}>{1}</{0}>\n"				# Basic Structure of an XML tag
-	for key, data in card_info:
+	for key, data in card_info.items():
 		XML_entry += XML_tag_base.format(key, data)
 	XML_entry += "</Card>\n"							# End of card info
 	return XML_entry
-
-
-

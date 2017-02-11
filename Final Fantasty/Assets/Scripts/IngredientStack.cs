@@ -59,7 +59,7 @@ public static class IngredientStack : MonoBehaviour {
 			searchTag += tag; 											// Combine those tags
 		}
 		try {
-			DatabaseEntry mealEntry = DB.seach(searchTag);				// Returns a clone of the database entry
+			DatabaseEntry mealEntry = DB.seachByTag(searchTag);			// Returns a clone of the database entry
 			cardArt = Image.FromFile(Path.Combine(MEAL_IMAGE_DIRECTORY, mealEntry.artLocation));
 			mealEntry.stats = combineStatsGood(mealEntry.stats, sumStats);
 			mealEntry.mechanics = combineMechanicsGood(mealEntry.mechanics, mechanicList);

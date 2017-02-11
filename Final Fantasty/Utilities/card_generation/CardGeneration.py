@@ -7,7 +7,7 @@ import os
 from card_generation import excelToJson, excelToPNG
 
 EXCEL_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "Ingredients.xlsx"
-JSON_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "CardDB.json"
+JSON_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "CardDB.xml"
 
 
 
@@ -20,7 +20,7 @@ def main():
     print("Updating Database")
     inFile, outFile = EXCEL_DATABASE, JSON_DATABASE
     cardList = excelToJson.readExcelFile(inFile)        # Reading in the list of cards
-    excelToJson.writeXML(cardList, outFile)        # Writing it to JSON
+    excelToJson.write_XML(cardList, outFile)        # Writing it to JSON
     print("Databases are now upto date!")
     print("Updating Pictures")
     excelToPNG.create_pictures(cardList)                 # Updating all of the pictures

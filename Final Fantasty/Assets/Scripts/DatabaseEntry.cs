@@ -2,32 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.XML;
+using System.Xml;
 
 // A tiny class for holding the database entry of a card!
 // <3 Rocky
-// TODO Write get and set methods!
+// TODO Write get and set methods, so we can have proper encapsulation
 public class DatabaseEntry {
-	string name;
-	string description;
-	string type;
-	string artLocation;						// For central card art
-	string spriteLocation;					// For a completed sprite. Null if a meal card!
-	string ingredientTag;					// Null if not an ingredient
-	List<string> mechanics;				
-	bool multiItems;
-	fixed byte stats[6];					// Take note of the fact I'm storing this in a byte!
+	public string name;
+	public string description;
+	public string type;
+	public string artLocation;						// For central card art
+	public string spriteLocation;					// For a completed sprite. Null if a meal card!
+	public string ingredientTag;					// Null if not an ingredient
+	public List<string> mechanics;				
+	public bool multiItems;
+	public fixed byte stats[6];						// Take note of the fact I'm storing this in a byte!
 
 	/*
 	 * Constructor takes an XML node and loops through sub-nodes assogning
 	 * data to correct attributes!
 	*/
-	public DatabaseEntry(XmlNode card_info) {
-		string[] python_List_Delimiters = {"[", ",", "]"}
+	public DatabaseEntry(XmlNode cardInfo) {
+		string[] python_List_Delimiters = {"[", ",", "]", "(", ")"};
 		int i;
-
+		XmlNodeList itemContent = cardInfo.ChildNodes;
 		foreach(XmlNode data in itemContent){
-			switch(GUIContent.Name){
+			switch(data.Name){
 				case "Type":
 					type = data.InnerText;
 					// TODO Check for type and set multiItems appropriately
@@ -42,20 +42,21 @@ public class DatabaseEntry {
 					string[] statString = data.InnerText.Split(python_List_Delimiters, 
 											StringSplitOptions.RemoveEmptyEntries);		// Parsing into array of strings!
 					for (i = 0; i < 6; i++) {
-						stats[i] = Byte.Parse(statString[i]);		// Writing to stats array!
+						stats[i] = Byte.Parse(statString[i]);							// Writing to stats array!
 					}
 				break;
 				case "Mechanics":
-					mechanics = data.InnerText.split(python_List_Delimiters, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+					string[] mechanicsTemp = data.InnerText.Split(python_List_Delimiters, StringSplitOptions.RemoveEmptyEntries);
+					mechanics = new List<string>(mechanicsTemp);
 				break;
 				case "Art":
-					artLocation = content.InnerText;
-					break;
+					artLocation = data.InnerText;
+				break;
 				case "Picture Location":
-					spriteLocation = content.InnerText;
+					spriteLocation = data.InnerText;
 				break;
 				case "Ingredient Tag":
-					ingredientTag = content.InnerText
+					ingredientTag = data.InnerText;
 				break;
 			}
 		}
@@ -67,18 +68,18 @@ public class DatabaseEntry {
 		string ingredientTag, List<string> mechanics, bool multiItems, byte[] stats) {
 
 		// Check if the stats array is of the correct size
-		if (stats.Length() != 6) {
+		if (stats.Length != 6) {
 			throw new Exception("Improper stat array given!");
 		}
 		this.name 			= name;
-		this.description;	= description;
-		this.type;			= type;
-		this.artLocation;	= artLocation;						// For central card art
+		this.description	= description;
+		this.type			= type;
+		this.artLocation	= artLocation;						// For central card art
 		this.spriteLocation = spriteLocation;					// For a completed sprite. Null if a meal card!
 		this.ingredientTag	= ingredientTag;					// Null if not an ingredient
-		this.mechanics	    = Mechanics;			
+		this.mechanics	    = mechanics;			
 		this.multiItems		= multiItems;
-		this.stats;			= stats;							// Take note of the fact I'm storing this in a byte!\
+		this.stats			= stats;							// Take note of the fact I'm storing this in a byte!\
 	}
 
 	// Returns a deep copy of this database entry
