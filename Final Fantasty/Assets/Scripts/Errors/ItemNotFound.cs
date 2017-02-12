@@ -1,5 +1,5 @@
   [Serializable()]
-    public class  : System.Exception
+    public class ItemNotFound : System.Exception
     {
         public ItemNotFound() : base() { }
         public ItemNotFound(string message) : base(message) { }

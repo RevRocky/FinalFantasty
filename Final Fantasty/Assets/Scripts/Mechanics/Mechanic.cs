@@ -15,13 +15,14 @@ using UnityEngine;
 public abstract class Mechanic : MonoBehaviour {
 
 
+	private string name;			// The plain-text name of a mechanic. This must match the name of the class
 	private bool activated;			// Tracks whether the mechanic has been activated yet.
 	private string toolTip;			// A tooltip associated with the mechanic. May be useful for a hover over dialogue
 	private Card parent;			// Allows a mechanic to access information pertaining to the card it belongs to!
 	public bool inheritable;		// Tracks if the mechanic is able to be passed down to meals with this card
 
 
-	public void init(Card parentCard, string description, bool inheritable) {
+	public void init(string name, Card parentCard, string description, bool inheritable) {
 		parent = parentCard;
 		toolTip = description;
 		activated = false;
@@ -46,6 +47,11 @@ public abstract class Mechanic : MonoBehaviour {
 		return parent;
 	}
 
+
+	public string getName() {
+		return name;
+	}
+
 	// Accessor for tool tip
 	public string getToolTip() {
 		return toolTip;
@@ -62,4 +68,6 @@ public abstract class Mechanic : MonoBehaviour {
 			activated = true;		// Flip that!
 		}
 	}
+
+
 }

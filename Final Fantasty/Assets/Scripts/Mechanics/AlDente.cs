@@ -14,6 +14,8 @@ using UnityEngine;
 public class AlDente : Mechanic {
 
 	public const int NUM_STATS = 6;
+
+	public const string NAME = "AlDente";
 	public const string DESCRIPTION = "Combine this card into a meal before time is up for Great Rewards";
 	public const bool INHERITABLE = false;
 
@@ -24,17 +26,17 @@ public class AlDente : Mechanic {
 	 * the constructor of the parent class
 	 */
 	public void init(Card parentCard) {
-		base.init(parentCard, DESCRIPTION, INHERITABLE);		// Call the initialisation function of the parent class
+		base.init(NAME, arentCard, DESCRIPTION, INHERITABLE);		// Call the initialisation function of the parent class
 	}
 
 	// This method will contain any effects that happen when a card is drawn into a player's hand
 	public override void onDraw () {
-		;									// It does nothing when drawn in to one's hand
+		;															// It does nothing when drawn in to one's hand
 	}
 
 	// When we enter play we want to activate the effect as well as create a timer near the card
 	public override void onPlayEnter () {
-		activate();							// Activate that sonuvabitch
+		activate();													// Activate that sonuvabitch
 		// Create a new timer!
 	}
 
@@ -49,14 +51,14 @@ public class AlDente : Mechanic {
 	// Accurate only for a test implementation
 	private int[] boostStats() {
 		int[] newStats = getParent().getStats();				// Getting the parent's stats
-		int maxStatIndex = maxIndex(newStats);			// Index of the highest stat!
-		int i;											// A loop counter
+		int maxStatIndex = maxIndex(newStats);					// Index of the highest stat!
+		int i;													// A loop counter
 		for (i = 0; i < NUM_STATS; i++) {
 			if (i == maxStatIndex) {
-				newStats[i] += 2;						// Increment biggest stat by 2
+				newStats[i] += 2;								// Increment biggest stat by 2
 			}
 			else {
-				newStats[i] += 1;						// Increment other stats by 1
+				newStats[i] += 1;								// Increment other stats by 1
 			}
 		}
 		return newStats;
@@ -64,6 +66,6 @@ public class AlDente : Mechanic {
 
 	// Contains any effects that are triggered when a card is "stacked" upon another
 	public override void onStack () {
-		;												// Nothing happens if we stack a card!
+		;														// Nothing happens if we stack a card!
 	}
 }

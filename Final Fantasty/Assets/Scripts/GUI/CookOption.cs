@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CookOption : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
 
+	// TODO Needs to know parent Itemstack
 	public Text textBox;
 	public string message;
 	public IEnumerator messageRoutine;

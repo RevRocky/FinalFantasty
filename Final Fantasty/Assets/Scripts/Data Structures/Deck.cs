@@ -5,7 +5,7 @@ using UnityEngine;
 public class Deck  {
 
 	private List<Card> cardList;
-	public int length
+	public int length;
 
 	// Constructs an empty deck
 	public Deck() {

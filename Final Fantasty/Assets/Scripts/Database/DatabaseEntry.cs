@@ -15,8 +15,8 @@ public class DatabaseEntry {
 	public string spriteLocation;					// For a completed sprite. Null if a meal card!
 	public string ingredientTag;					// Null if not an ingredient
 	public List<string> mechanics;				
-	public bool multiItems;
-	public fixed byte stats[6];						// Take note of the fact I'm storing this in a byte!
+	public bool multiItems;							// We may want to have this kind of check at the GUI level
+	public byte[] stats;						    // Take note of the fact I'm storing this in a byte!
 
 	/*
 	 * Constructor takes an XML node and loops through sub-nodes assogning
@@ -30,7 +30,9 @@ public class DatabaseEntry {
 			switch(data.Name){
 				case "Type":
 					type = data.InnerText;
-					// TODO Check for type and set multiItems appropriately
+					if (type != "Tool") {
+						multiItems = true;			
+					}
 				break;
 				case "Name":
 					name = data.InnerText;
@@ -39,6 +41,7 @@ public class DatabaseEntry {
 					description = data.InnerText;
 				break;
 				case "Stats":
+					stats = new byte[6];
 					string[] statString = data.InnerText.Split(python_List_Delimiters, 
 											StringSplitOptions.RemoveEmptyEntries);		// Parsing into array of strings!
 					for (i = 0; i < 6; i++) {
@@ -62,8 +65,27 @@ public class DatabaseEntry {
 		}
 	}
 
-	// A constructor only used by the clone method to create a new Database Entry.
-	// TODO use our set methods
+	/* 
+	 * This constructor should only be called in the act of procedrually generating cards. Everything that is
+	 * not required by this special case will be passed into the "Clone" constructor as a NULL value.
+	 * As a result, it is best to use with caution
+	 */
+	public DatabaseEntry(string name, string type, string artLocation, List<string> mechanics, byte[] stats) {
+
+		// TODO Find a bunch of quotes about exploration!
+		string mistakeDescription = "We shall not cease from exploration, and the end of all our exploring "  
+									+ "will be to arrive where we started and know the place for the first time. - T.S. Elliot";
+		bool multiItems = true;
+		this(name, mistakeDescription, type, artLocation, null, null, mechanics, multiItems, stats);	// Instantiate this mofo!
+	}
+
+	// Returns a deep copy of this database entry
+	public DatabaseEntry clone() {
+		return new DatabaseEntry(name, description, type, artLocation, 
+			spriteLocation, ingredientTag, mechanics, multiItems, stats);	// Return a brand new DB entry with same type of info
+	}
+
+	// This constructor takes each and every bit of information individually. It is only called by the clone method and the 
 	public DatabaseEntry(string name, string description, string type, string artLocation, string spriteLocation,
 		string ingredientTag, List<string> mechanics, bool multiItems, byte[] stats) {
 
@@ -82,9 +104,4 @@ public class DatabaseEntry {
 		this.stats			= stats;							// Take note of the fact I'm storing this in a byte!\
 	}
 
-	// Returns a deep copy of this database entry
-	public DatabaseEntry clone() {
-		return new DatabaseEntry(name, description, type, artLocation, 
-			spriteLocation, ingredientTag, mechanics, multiItems, stats);	// Return a brand new DB entry with same type of info
-	}
 }
