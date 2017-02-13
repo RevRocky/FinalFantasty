@@ -14,6 +14,7 @@ public class DatabaseEntry {
 	public string artLocation;						// For central card art
 	public string spriteLocation;					// For a completed sprite. Null if a meal card!
 	public string ingredientTag;					// Null if not an ingredient
+	public string tag;
 	public List<string> mechanics;				
 	public bool multiItems;							// We may want to have this kind of check at the GUI level
 	public byte[] stats;						    // Take note of the fact I'm storing this in a byte!
@@ -61,6 +62,9 @@ public class DatabaseEntry {
 				case "Ingredient Tag":
 					ingredientTag = data.InnerText;
 				break;
+				case "Tag":
+					tag = data.InnerText;
+				break;
 			}
 		}
 	}
@@ -75,8 +79,22 @@ public class DatabaseEntry {
 		// TODO Find a bunch of quotes about exploration!
 		string mistakeDescription = "We shall not cease from exploration, and the end of all our exploring "  
 									+ "will be to arrive where we started and know the place for the first time. - T.S. Elliot";
-		bool multiItems = true;
-		this(name, mistakeDescription, type, artLocation, null, null, mechanics, multiItems, stats);	// Instantiate this mofo!
+
+		// Seriously doe, fuck it. I'd rather have code repition then twist to C#'s evil clutches.
+		if (stats.Length != 6) {
+			throw new Exception("Improper stat array given!");
+		}
+		this.name 			= name;
+		this.description	= mistakeDescription;
+		this.type			= type;
+		this.artLocation	= artLocation;			// For central card art
+		this.spriteLocation = null;					// For a completed sprite. Null if a meal card!
+		this.ingredientTag	= null;					// Null if not an ingredient
+		this.mechanics	    = mechanics;
+		this.tag 			= name;
+		this.multiItems		= true;
+		this.stats			= stats;							// Take note of the fact I'm storing this in a byte!\
+	
 	}
 
 	// Returns a deep copy of this database entry

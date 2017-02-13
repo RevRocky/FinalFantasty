@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /*
  * This is intended to be a rough sketch of
  * card implementation only
@@ -9,7 +10,7 @@ using UnityEngine;
 public class Card : MonoBehaviour {
 
 	public const int NUM_STATS = 6;
-	public GameObject CardPrefab;													// Drag this over in the editor
+	public static GameObject CardPrefab;													// Drag this over in the editor
 
 	private string name;
 	private string type;
@@ -24,8 +25,10 @@ public class Card : MonoBehaviour {
 	}
 
 	// Instantiates a new card prefab object and returns reference to its card script
-	public Card instantiateCard() {
-		Card newCard = (Card)Instantiate(CardPrefab);								// TODO Ask the location manager where to put the card!								
+	public static void instantiateCard(DatabaseEntry cardInfo) {
+		GameObject newObj = Instantiate(CardPrefab);								// TODO Ask the location manager where to put the card!			
+		Card newCard = newObj.GetComponent<Card>();
+		newCard.Init(cardInfo);	
 	}
 
 	// Initialises a card from a database entry
@@ -35,24 +38,32 @@ public class Card : MonoBehaviour {
 		type = cardInfo.type;
 		stats = cardInfo.stats;
 		mechanics = instantiateMechanics(cardInfo.mechanics);
-		graphic =	// TODO load a sprite from memory
+		
+		if (type == "Meal") {
+			string spriteLocation = ImageProcessing.createMealCard(cardInfo);		//  Creating meal card and getting its location on disk
+			graphic = IMG2Sprite.instance.LoadNewSprite(spriteLocation);			
+			// TODO Place card appropriately
+		}
+		else {
+			graphic = IMG2Sprite.instance.LoadNewSprite(cardInfo.spriteLocation);	// Creating a sprite from said meal card
+			// TODO Position card correctly
+		}
+	return;
 	}
 
 	/*
 	 * Reads through a supplied list of mechanics and adding instantiated
 	 * copies of each mechanic to a list of mechanics that is then returned
-	 * to the calling environment
+	 * to the calling environment.
 	 */
 	private List<Mechanic> instantiateMechanics(List<string> mechanicStrings) {
 		List<Mechanic> mechanicList = new List<Mechanic>(mechanicStrings.Count);
 		foreach(string mechanic in mechanicStrings) {
 			try {
-				Mechanic newMechanic = gameObject.AddComponent(mechanic);						// Adding the mechanic by its name to the list
-				newMechanic.init(this);															// Polymorphism should run the method on the /actual/ mechanic
-				mechanicList.Add(newMechanic);													// Adding the new mechanic to the list
+				Mechanic.instantiateByName(mechanic, this);							// Instantiates the mechanic by name
 			}
-			catch (Exception e) {
-				Debug.Log("Mechanic {0} is not implemented. Double check database", mechanic);	// If the mechanic doesn't exist print to debug log and move on
+			catch (System.Exception e) {
+				Debug.Log("Mechanic is not implemented. Double check database");	// If the mechanic doesn't exist print to debug log and move on
 			}
 		}
 		return mechanicList;
@@ -64,14 +75,19 @@ public class Card : MonoBehaviour {
 	}
 
 	// Fetch method for stats
-	public int[] getStats() {return stats;}
+	public byte[] getStats() {return stats;}
 
 	// Sets stats to be the supplied array
 	// If supplied array is not of correct size, it will simply preserve the current set of stats
-	public void setStats(int[] newStats) {
+	public void setStats(byte[] newStats) {
 		if (newStats.Length == NUM_STATS) {
 			stats = newStats;
 		}
 		return;
+	}
+
+	// Returns a list of the card's mechanics!
+	public List<Mechanic> getMechanics() {
+		return mechanics;
 	}
 }

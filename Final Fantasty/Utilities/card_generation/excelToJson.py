@@ -29,6 +29,7 @@ def readExcelFile(inFile):
 		card["Description"] = rowValues[2]
 		card["Stats"] = (rowValues[3], rowValues[4], rowValues[5], rowValues[6], rowValues[7], rowValues[8])	 # Sweet, Sour, Bitter, Spicy, Salty, Umami (Not final)
 		card["Mechanics"] = (rowValues[9], rowValues[10])	# Stored as a two-tuple
+		card["Ingredient Tag"] = rowValues[11]
 		card["Tag"] = rowValues[12]							# Tag must be a unique value
 		card["Art"] = rowValues[13]
 		card["Picture Location"] = rowValues[14]

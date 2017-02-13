@@ -26,7 +26,7 @@ public class AlDente : Mechanic {
 	 * the constructor of the parent class
 	 */
 	public void init(Card parentCard) {
-		base.init(NAME, arentCard, DESCRIPTION, INHERITABLE);		// Call the initialisation function of the parent class
+		base.init(NAME, parentCard, DESCRIPTION, INHERITABLE);		// Call the initialisation function of the parent class
 	}
 
 	// This method will contain any effects that happen when a card is drawn into a player's hand
@@ -42,15 +42,15 @@ public class AlDente : Mechanic {
 
 	// If there is still time left when the card is combined, we augment the stats of the parent
 	public override void onCombine () {
-		if (timer.timeRemaining > 0.00) {
-				getParent().setStats(boostStats());
-			}
-		}
-
+//		if (timer.timeRemaining > 0.00) {
+//				getParent().setStats(boostStats());
+//			}
+//		}
+	}
 	// Boosts the stats of the parent card by 1 each. 2 for the highest stat
 	// Accurate only for a test implementation
-	private int[] boostStats() {
-		int[] newStats = getParent().getStats();				// Getting the parent's stats
+	private byte[] boostStats() {
+		byte[] newStats = getParent().getStats();				// Getting the parent's stats
 		int maxStatIndex = maxIndex(newStats);					// Index of the highest stat!
 		int i;													// A loop counter
 		for (i = 0; i < NUM_STATS; i++) {
@@ -62,6 +62,21 @@ public class AlDente : Mechanic {
 			}
 		}
 		return newStats;
+	}
+
+	/*
+	 * Returns the index of an array of bytes with the largest value. 
+	 * Takes a naive approach as it will only be called with small arrays
+	 */
+	private int maxIndex(byte[] anArray) {
+		int indexMax = 0;
+		int i;
+		for (i = 0; i < anArray.Length ; i++) {
+			if (anArray[i] > anArray[indexMax]) {
+				indexMax = i;
+			}
+		}
+		return indexMax;
 	}
 
 	// Contains any effects that are triggered when a card is "stacked" upon another

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
  * For the time being, each type of method activation will be defined in
  * all of the mechanics but, in the actual implementation activation methods 
  * which do not apply will be nothing more than stubs.
+ * 
+ * Note: Mechanics are now explicitly attached to game objects but they also have 
  * 
  * Version 0.1 (Mostly a demonstration. I will rework this from a software archetecture point of view.
  * 
@@ -28,6 +31,24 @@ public abstract class Mechanic : MonoBehaviour {
 		activated = false;
 		this.inheritable = inheritable;
 
+	}
+
+	/*
+	 * Instantiates a mechanic of the same name as the string given to this 
+	 * method. Note: This method MUST be updated whenever we add a new mechanic
+	 * TODO: Find a better way to handle this!
+	 */
+	public static Mechanic instantiateByName(string mechanicName, Card parentCard) {
+		switch(mechanicName) {
+			case("AlDente"):
+				AlDente newMechanic = parentCard.gameObject.AddComponent<AlDente>() as AlDente;
+				newMechanic.init(parentCard);
+				return (Mechanic) newMechanic;
+				break;
+			default:
+			throw new MechanicNotFound(String.Format("The mechanic {0} could not be found", mechanicName));
+				break;
+		}
 	}
 
 	// This method will contain any effects that happen when a card is drawn into a player's hand
