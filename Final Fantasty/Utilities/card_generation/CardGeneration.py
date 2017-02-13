@@ -6,8 +6,9 @@ Author: Rocky Petkov"""
 import os
 from card_generation import excelToJson, excelToPNG
 
-EXCEL_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "Ingredients.xlsx"
-JSON_DATABASE = ".." + os.sep + ".." + os.sep + "DB" + os.sep + "CardDB.xml"
+DB_DIRECTORY = ".." + os.sep + ".." + os.sep + "Assets" + os.sep + "Resources" + os.sep + "DB" + os.sep
+EXCEL_DATABASE = "Ingredients.xlsx"
+JSON_DATABASE = "CardDB.xml"
 
 
 

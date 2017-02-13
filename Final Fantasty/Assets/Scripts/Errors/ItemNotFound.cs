@@ -1,4 +1,3 @@
-  [Serializable()]
     public class ItemNotFound : System.Exception
     {
         public ItemNotFound() : base() { }

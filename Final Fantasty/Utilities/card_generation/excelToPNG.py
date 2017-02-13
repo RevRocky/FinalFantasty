@@ -13,9 +13,9 @@ import copy
 # Below are some global constants regarding different colours, fonts and file locations to be used with this module.
 # Please do not tamper with these constants with out the express approval of the author.
 
-CARD_ART_DIRECTORY = ".." + os.sep + ".." + os.sep + "Art"                 # Path to Card Art!
-CARD_DIRECTORY = ".." + os.sep + ".." + os.sep + "Art" + os.sep + "Cards"  # Path to Final Card Images
-STAT_IMAGE_DIRECTORY = ".." + os.sep + ".." + os.sep + "Art" + os.sep + "Stats"
+CARD_ART_DIRECTORY = ".." + os.sep + ".." + os.sep + "Assets" + os.sep + "Resources" + os.sep + "Art"                # Path to Card Art!
+CARD_DIRECTORY = CARD_ART_DIRECTORY os.sep + "Cards"                                                                 # Path to Final Card Images
+STAT_IMAGE_DIRECTORY = CARD_ART_DIRECTORY + os.sep + "Stats"
 STAT_IMAGES = ["Sweet.png", "Sour.png", "Bitter.png", "Spicy.png", "Salty.png", "Umami.png"]
 
 MECHANICS_WRITEUPS = ".." + os.sep + ".." + os.sep + "Docs" + os.sep + "Docs" + "mechanics.txt"

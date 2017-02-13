@@ -30,24 +30,25 @@ public class IngredientStack : MonoBehaviour {
 	 * it needs to go.
 	 * Presently assumes that card stats are in a 6-tuple and that tags of meal cards are listed in sorted order.
 	 */
-	public Card combineCards() {
+	public void combineCards() {
 		int j;
-		string searchTag;
 		string artLocation;												// Obtained either through DB retrieval or combination of images
-		DatabaseEntry mealEntry;										// Contains a database entry pertaining to the meal being generated
-
-		byte sumStats = new int[NUM_STATS]  {0, 0, 0, 0, 0, 0};
-		string tags = new string [theCards.Count];						// The tags for each card
+																		// Contains a database entry pertaining to the meal being generated
+		DatabaseEntry mealEntry = null;									// This will always be instantiated!
+		string searchTag = "";
+		byte[] sumStats = new byte[NUM_STATS]  {0, 0, 0, 0, 0, 0};
+		string[] tags = new string [theCards.Count];					// The tags for each card
 		List<string> mechanicList = new List<string> ();
 
 		// Loop over cumulating mechanics, stats and tags for each of our cards
 		foreach (Card card in theCards) {
-			int i = 0;													// TODO Fix this garbage
+			int i = 0;
+			byte[] cardStats = card.getStats();
 			for (j = 0; j < NUM_STATS; j++) {
-				sumStats [j] += card.stats [j];							// Taking the sum of each stat
+				sumStats [j] += cardStats[j];							// Taking the sum of each stat
 			}
 			tags[i] = card.tag;											// Adding the tag to the list
-			foreach (Mechanic mechanic in card.mechanics) {
+			foreach (Mechanic mechanic in card.getMechanics()) {
 				if (! mechanic.inheritable) {
 					mechanicList.Add(mechanic.getName());				// If the mechanic can be inherited add the name!			
 				}
@@ -59,7 +60,7 @@ public class IngredientStack : MonoBehaviour {
 			searchTag += tag; 											// Combine those tags
 		}
 		try {
-			mealEntry = DB.seachByTag(searchTag);						// Returns a clone of the database entry
+			mealEntry = Database.instance.searchByTag(searchTag);		// Returns a clone of the database entry
 			mealEntry.stats = combineStatsGood(mealEntry.stats, sumStats);
 			mealEntry.mechanics = combineMechanicsGood(mealEntry.mechanics, mechanicList);
 		}
@@ -73,7 +74,7 @@ public class IngredientStack : MonoBehaviour {
 							mechanicList, mealStats);					// Create a database entry for this card					
 		}	
 		finally {
-			Card.instantiateFromDB(mealEntry);							// Instantiate the card prefab (or what ever it is called)
+			Card.instantiateCard(mealEntry);							// Instantiate the card prefab (or what ever it is called)
 		}
 	}
 
@@ -87,15 +88,14 @@ public class IngredientStack : MonoBehaviour {
 	}
 
 	// Adds some hefty negative stats to the meals created by the ingredients
-	private byte[] combineStatsBad(int[] baseStats) {
+	private byte[] combineStatsBad(byte[] baseStats) {
 		return baseStats; 								// TODO What stat penalties should be applied
 	}
 
 	// Combines any mechanics the ingredients have with the list of mechanics of the meal.
 	// TODO implement instantiateMechanics
-	private List<Mechanic> combineMechanicsGood(List<string> baseMechanicStrings, List<string> ingredientMechanics) {
-		List<Mechanic> baseMechanics = Card.instantiateMechanics(baseMechanicStrings);								// Instantiate mechanics from their strings
-		List<Mechanic> newMechanics = new List<Mechanic>(baseMechanics.Count + ingredientMechanics.Count);			// Creating a static sized buffer
+	private List<string> combineMechanicsGood(List<string> baseMechanics, List<string> ingredientMechanics) {					
+		List<string> newMechanics = new List<string>(baseMechanics.Count + ingredientMechanics.Count);			// Creating a static sized buffer
 		newMechanics.AddRange(baseMechanics);
 		newMechanics.AddRange(ingredientMechanics);
 		return newMechanics;
@@ -103,8 +103,8 @@ public class IngredientStack : MonoBehaviour {
 
 
 	// Randomly adds a negative side-effect to
-	private List<Mechanic> addBadMechanic(List<Mechanic> ingredientMechanics) {
-		;		// TODO Come up with negative side-effects
+	private List<string> addBadMechanic(List<string> ingredientMechanics) {
+		return ingredientMechanics;		// TODO Come up with negative side-effects
 	}
 
 }
