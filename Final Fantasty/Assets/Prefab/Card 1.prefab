@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 114163524316883760}
   - component: {fileID: 114883301374874104}
   - component: {fileID: 114368814180491688}
+  - component: {fileID: 148340416970331608}
+  - component: {fileID: 225458199015429168}
   m_Layer: 5
   m_Name: Card 1
   m_TagString: Untagged
@@ -230,6 +232,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debb961ed8eae0c4584016be6e3b51c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentToReturnTo: {fileID: 0}
+  placeholderParent: {fileID: 0}
+--- !u!148 &148340416970331608
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667827426540268}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 224167688800549116}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!222 &222199165469533464
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -329,3 +345,14 @@ RectTransform:
   m_AnchoredPosition: {x: 5.7, y: 46.3}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225458199015429168
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667827426540268}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
