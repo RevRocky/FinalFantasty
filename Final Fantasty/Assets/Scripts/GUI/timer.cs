@@ -20,7 +20,7 @@ public class timer : MonoBehaviour {
 
 	void OnGUI(){
 		if (timeRemaining > 0) {
-			GUI.Label (new Rect (100,25,100,30), "Time Remaining: " + (int)timeRemaining);
+			GUI.Label (new Rect (100,100,100,30), "Time Remaining: " + (int)timeRemaining);
 
 		} else {
 			GUI.Label (new Rect (50,25,100,30), "Time's up");
